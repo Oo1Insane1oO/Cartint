@@ -33,6 +33,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 
+find_package(MPI REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(OpenMP REQUIRED)
 find_package(Boost REQUIRED)
@@ -42,7 +43,7 @@ target_include_directories(
     PRIVATE ${Boost_INCLUDE_DIRS} ${SOURCE}
     PUBLIC ${INCLUDE} ${API}
 )
-target_link_libraries(${PROJECT_NAME} Eigen3::Eigen ${Boost_LIBRARIES} ${OpenMP_CXX_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} Eigen3::Eigen ${Boost_LIBRARIES} ${OpenMP_CXX_LIBRARIES} ${MPI_C})
 
 if(${TESTING})
     set(CMAKE_BUILD_TYPE Debug)

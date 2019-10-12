@@ -1,12 +1,13 @@
 #include <iomanip>
+#include <cstdlib>
 
 #include <cartint.hpp>
 
-int main(void) {
-    unsigned int dim = 2;
-    unsigned int num_basis = 12;
-    double scaling = 1.0;
-    double omega = 1.0;
+int main(int argc, char *argv[]) {
+    unsigned int dim = std::atoi(argv[1]);
+    unsigned int num_basis = std::atoi(argv[2]) / 2;
+    double scaling = std::atof(argv[3]);
+    double omega = std::atof(argv[4]);
 
     GaussianIntegrals* I = new GaussianIntegrals(dim, num_basis, scaling);
     I->initializeParameters(omega);
