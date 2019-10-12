@@ -1,9 +1,10 @@
+#include <iomanip>
+
 #include <cartint.hpp>
-#include <cartint/methods.h>
 
 int main(void) {
     unsigned int dim = 2;
-    unsigned int num_basis = 6;
+    unsigned int num_basis = 12;
     double scaling = 1.0;
     double omega = 1.0;
 
@@ -14,7 +15,7 @@ int main(void) {
         for (unsigned int q = 0; q < num_basis; ++q) {
             for (unsigned int r = 0; r < num_basis; ++r) {
                 for (unsigned int s = 0; s < num_basis; ++s) {
-                    Methods::sepPrint(p, q, r, s, I->coulombElement(p, q, r, s));
+                    std::cout << std::setprecision(15) << p << " " << q << " " << r << " " << s << " " << I->coulombElement(p, q, r, s) << std::endl;
                 } // end fors
             } // end forr
         } // end forq
