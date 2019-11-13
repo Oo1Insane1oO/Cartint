@@ -1,0 +1,13 @@
+[tool.poetry]
+name = "cartint"
+version = "0.1.0"
+description = "Solver for integrals over Gauss-Hermite functions in cartesian coordinates"
+authors = ["Alocias Mariadason"]
+
+[tool.poetry.dependencies]
+python = "*"
+pyyaml = "^5.1.2"
+setuptools = "*"
+
+[tool.poetry.dev-dependencies]
+pytest = "^3.4"
