@@ -1,10 +1,25 @@
 """
 Installer for cartint
 """
-from setuptools import setup, find_packages
+import os
+import subprocess
+from setuptools import setup, find_packages, Extension
 
-from setuptools.command.develop import develop
-from setuptools.command.install import install
+class CMakeExtension(Extension):
+    def __init__(self, name, sourcedir=''):
+        Extension.__init__(self, name, sources=[])
+        self.sourcedir = os.path.abspath(sourcedir)
+
+CMAKE_STATUS = subprocess.run(
+    ["poetry", "run", "env", "CMAKE_BUILD_PARALLEL_LEVEL=$(nproc --all)", "cmake", ".", "-B", "build"],
+    capture_output=True,
+)
+
+assert CMAKE_STATUS.returncode == 0, CMAKE_STATUS.stdout
+
+MAKE_STATUS = subprocess.run(["poetry", "run", "make", "-C", "build"])
+
+assert MAKE_STATUS.returncode == 0, MAKE_STATUS.stdout
 
 setup(
     name="cartint",
@@ -13,6 +28,7 @@ setup(
     author="Alocias Mariadason",
     package_dir={"": "interface"},
     packages=find_packages("interface"),
+    ext_modules=[CMakeExtension("integral", "interface")],
     entry_points={
         "console_scripts": [
             "cartrun=cartrun.main:run",

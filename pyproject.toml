@@ -8,6 +8,7 @@ authors = ["Alocias Mariadason"]
 python = "*"
 pyyaml = "^5.1.2"
 setuptools = "*"
+pybind11 = "^2.4"
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.4"
