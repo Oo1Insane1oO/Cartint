@@ -17,9 +17,9 @@ set(TEST test)
 
 set(CMAKE_BUILD_TYPE Release)
 
-set(CMAKE_CXX_FLAGS "-Wall -Wextra")
-set(CMAKE_CXX_FLAGS_DEBUG "-g")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -fopenmp -lpthread")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -fPIC")
+set(CMAKE_CXX_FLAGS_DEBUG "-g -fPIC")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -fopenmp -lpthread -fPIC")
 
 project(
     Cartint
@@ -39,10 +39,10 @@ find_package(MPI REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(OpenMP REQUIRED)
 find_package(Boost REQUIRED)
-find_package(PythonLibs REQUIRED)
+find_package(PythonLibs 3 REQUIRED)
 
-set(PYBIND11_CPP_STANDARD -std=c++17)
-set(PYBIND11_PYTHON_VERSION 3.7)
+message("${PYTHON_INCLUDE_DIRS}")
+return()
 
 execute_process(
     COMMAND poetry show -v
@@ -66,8 +66,6 @@ target_link_libraries(
     ${PROJECT_NAME} Eigen3::Eigen
         ${Boost_LIBRARIES} ${OpenMP_CXX_LIBRARIES} ${MPI_C} ${PYTHON_LIBRARIES}
 )
-set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "${PYTHON_MODULE_PREFIX}"
-                                      SUFFIX "${PYTHON_MODULE_EXTENSION}")
 
 if(${TESTING})
     set(CMAKE_BUILD_TYPE Debug)

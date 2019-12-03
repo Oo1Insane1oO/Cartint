@@ -18,11 +18,11 @@ CMAKE_STATUS = subprocess.run(
     capture_output=True,
 )
 
-assert CMAKE_STATUS.returncode > -1, CMAKE_STATUS.stdout
+assert CMAKE_STATUS.returncode == 0, CMAKE_STATUS.stdout
 
 MAKE_STATUS = subprocess.run(["poetry", "run", "make", "-C", "build"])
 
-assert MAKE_STATUS.returncode > -1, MAKE_STATUS.stdout
+assert MAKE_STATUS.returncode == 0, MAKE_STATUS.stdout
 
 setup(
     name="cartint",
@@ -31,7 +31,7 @@ setup(
     author="Alocias Mariadason",
     package_dir={"": "interface"},
     packages=find_packages("interface"),
-    ext_modules=[CMakeExtension("integral", "binding")],
+    ext_modules=[CMakeExtension("intobj")],
     entry_points={
         "console_scripts": [
             "cartrun=cartrun.main:run",
